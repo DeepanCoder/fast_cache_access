@@ -14,7 +14,7 @@ module Memory(input logic clk,rstn,
     logic [63:0] mem [0:(1<<14)-1]; // 14-bit address for cache memory
 
     // Read and write operations
-  always_ff @(posedge clk or !rstn) begin
+    always_ff @(negedge clk or !rstn) begin
     if (!rstn) data_out=0;
         else if (read_enable) begin
             data_out = mem[address];
@@ -22,7 +22,7 @@ module Memory(input logic clk,rstn,
     else data_out = 0;
     end
 
-  always_ff @(posedge clk or !rstn) begin
+    always_ff @(negedge clk or !rstn) begin
     if(!rstn) mem[address] = 0;
         if (write_enable) begin
             mem[address] = data_in;
